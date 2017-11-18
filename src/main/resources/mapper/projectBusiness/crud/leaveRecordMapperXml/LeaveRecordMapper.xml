@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.seits.modules.business.bp.dao.crud.leaveRecordMapper.LeaveRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecord" >
+    <id column="LEAVE_ID" property="leaveId" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_ID" property="employeeId" jdbcType="VARCHAR" />
+    <result column="LEAVE_REASONS" property="leaveReasons" jdbcType="VARCHAR" />
+    <result column="LEAVE_TIME" property="leaveTime" jdbcType="TIMESTAMP" />
+    <result column="LEAVE_TYPE" property="leaveType" jdbcType="VARCHAR" />
+    <result column="LEAVE_TIME_QUANTUM" property="leaveTimeQuantum" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LEAVE_ID, EMPLOYEE_ID, LEAVE_REASONS, LEAVE_TIME, LEAVE_TYPE, LEAVE_TIME_QUANTUM, 
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PMS_CM_LEAVERECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecordKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_CM_LEAVERECORD
+    where LEAVE_ID = #{leaveId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecordKey" >
+    delete from PMS_CM_LEAVERECORD
+    where LEAVE_ID = #{leaveId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecordExample" >
+    delete from PMS_CM_LEAVERECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecord" >
+    insert into PMS_CM_LEAVERECORD (LEAVE_ID, EMPLOYEE_ID, LEAVE_REASONS, 
+      LEAVE_TIME, LEAVE_TYPE, LEAVE_TIME_QUANTUM, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{leaveId,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{leaveReasons,jdbcType=VARCHAR}, 
+      #{leaveTime,jdbcType=TIMESTAMP}, #{leaveType,jdbcType=VARCHAR}, #{leaveTimeQuantum,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecord" >
+    insert into PMS_CM_LEAVERECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        LEAVE_ID,
+      </if>
+      <if test="employeeId != null" >
+        EMPLOYEE_ID,
+      </if>
+      <if test="leaveReasons != null" >
+        LEAVE_REASONS,
+      </if>
+      <if test="leaveTime != null" >
+        LEAVE_TIME,
+      </if>
+      <if test="leaveType != null" >
+        LEAVE_TYPE,
+      </if>
+      <if test="leaveTimeQuantum != null" >
+        LEAVE_TIME_QUANTUM,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        #{leaveId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveReasons != null" >
+        #{leaveReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTime != null" >
+        #{leaveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveType != null" >
+        #{leaveType,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTimeQuantum != null" >
+        #{leaveTimeQuantum,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecordExample" resultType="java.lang.Integer" >
+    select count(*) from PMS_CM_LEAVERECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PMS_CM_LEAVERECORD
+    <set >
+      <if test="record.leaveId != null" >
+        LEAVE_ID = #{record.leaveId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        EMPLOYEE_ID = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveReasons != null" >
+        LEAVE_REASONS = #{record.leaveReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveTime != null" >
+        LEAVE_TIME = #{record.leaveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leaveType != null" >
+        LEAVE_TYPE = #{record.leaveType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveTimeQuantum != null" >
+        LEAVE_TIME_QUANTUM = #{record.leaveTimeQuantum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PMS_CM_LEAVERECORD
+    set LEAVE_ID = #{record.leaveId,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{record.employeeId,jdbcType=VARCHAR},
+      LEAVE_REASONS = #{record.leaveReasons,jdbcType=VARCHAR},
+      LEAVE_TIME = #{record.leaveTime,jdbcType=TIMESTAMP},
+      LEAVE_TYPE = #{record.leaveType,jdbcType=VARCHAR},
+      LEAVE_TIME_QUANTUM = #{record.leaveTimeQuantum,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecord" >
+    update PMS_CM_LEAVERECORD
+    <set >
+      <if test="employeeId != null" >
+        EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveReasons != null" >
+        LEAVE_REASONS = #{leaveReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTime != null" >
+        LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveType != null" >
+        LEAVE_TYPE = #{leaveType,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTimeQuantum != null" >
+        LEAVE_TIME_QUANTUM = #{leaveTimeQuantum,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where LEAVE_ID = #{leaveId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.seits.modules.business.bp.model.leaveRecord.LeaveRecord" >
+    update PMS_CM_LEAVERECORD
+    set EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR},
+      LEAVE_REASONS = #{leaveReasons,jdbcType=VARCHAR},
+      LEAVE_TIME = #{leaveTime,jdbcType=TIMESTAMP},
+      LEAVE_TYPE = #{leaveType,jdbcType=VARCHAR},
+      LEAVE_TIME_QUANTUM = #{leaveTimeQuantum,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where LEAVE_ID = #{leaveId,jdbcType=VARCHAR}
+  </update>
+</mapper>

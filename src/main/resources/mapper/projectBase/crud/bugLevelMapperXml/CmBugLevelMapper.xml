@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.seits.modules.business.cm.dao.crud.bugLevelMapper.CmBugLevelMapper" >
+  <resultMap id="BaseResultMap" type="cn.seits.modules.business.cm.model.bugLevel.CmBugLevel" >
+    <id column="BUG_LEVEL_ID" property="bugLevelId" jdbcType="VARCHAR" />
+    <result column="BUG_LEVEL_NAME" property="bugLevelName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BUG_LEVEL_ID, BUG_LEVEL_NAME, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PMS_CM_BUGLEVEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_CM_BUGLEVEL
+    where BUG_LEVEL_ID = #{bugLevelId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevelKey" >
+    delete from PMS_CM_BUGLEVEL
+    where BUG_LEVEL_ID = #{bugLevelId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevelExample" >
+    delete from PMS_CM_BUGLEVEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevel" >
+    insert into PMS_CM_BUGLEVEL (BUG_LEVEL_ID, BUG_LEVEL_NAME, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{bugLevelId,jdbcType=VARCHAR}, #{bugLevelName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevel" >
+    insert into PMS_CM_BUGLEVEL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bugLevelId != null" >
+        BUG_LEVEL_ID,
+      </if>
+      <if test="bugLevelName != null" >
+        BUG_LEVEL_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bugLevelId != null" >
+        #{bugLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugLevelName != null" >
+        #{bugLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevelExample" resultType="java.lang.Integer" >
+    select count(*) from PMS_CM_BUGLEVEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PMS_CM_BUGLEVEL
+    <set >
+      <if test="record.bugLevelId != null" >
+        BUG_LEVEL_ID = #{record.bugLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bugLevelName != null" >
+        BUG_LEVEL_NAME = #{record.bugLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PMS_CM_BUGLEVEL
+    set BUG_LEVEL_ID = #{record.bugLevelId,jdbcType=VARCHAR},
+      BUG_LEVEL_NAME = #{record.bugLevelName,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevel" >
+    update PMS_CM_BUGLEVEL
+    <set >
+      <if test="bugLevelName != null" >
+        BUG_LEVEL_NAME = #{bugLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where BUG_LEVEL_ID = #{bugLevelId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.seits.modules.business.cm.model.bugLevel.CmBugLevel" >
+    update PMS_CM_BUGLEVEL
+    set BUG_LEVEL_NAME = #{bugLevelName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where BUG_LEVEL_ID = #{bugLevelId,jdbcType=VARCHAR}
+  </update>
+</mapper>

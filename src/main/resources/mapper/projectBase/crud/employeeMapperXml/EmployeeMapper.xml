@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.seits.modules.business.cm.dao.crud.employeeMapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="cn.seits.modules.business.cm.model.employee.Employee" >
+    <id column="EMPLOYEE_ID" property="employeeId" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_NAME" property="employeeName" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="CHAR" />
+    <result column="DUTY_ID" property="dutyId" jdbcType="VARCHAR" />
+    <result column="TECHNOLOGYPREFERENCE_ID" property="technologypreferenceId" jdbcType="VARCHAR" />
+    <result column="WORKING_YEARS" property="workingYears" jdbcType="DECIMAL" />
+    <result column="HIRE_TIME" property="hireTime" jdbcType="TIMESTAMP" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="QQNO" property="qqno" jdbcType="VARCHAR" />
+    <result column="LINKNO" property="linkno" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.seits.modules.business.cm.model.employee.EmployeeWithBLOBs" extends="BaseResultMap" >
+    <result column="PHOTOGRAPH" property="photograph" jdbcType="BLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EMPLOYEE_ID, EMPLOYEE_NAME, GENDER, DUTY_ID, TECHNOLOGYPREFERENCE_ID, WORKING_YEARS, 
+    HIRE_TIME, EMAIL, QQNO, LINKNO, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    PHOTOGRAPH
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PMS_CM_EMPLOYEE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PMS_CM_EMPLOYEE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PMS_CM_EMPLOYEE
+    where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeKey" >
+    delete from PMS_CM_EMPLOYEE
+    where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeExample" >
+    delete from PMS_CM_EMPLOYEE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeWithBLOBs" >
+    insert into PMS_CM_EMPLOYEE (EMPLOYEE_ID, EMPLOYEE_NAME, GENDER, 
+      DUTY_ID, TECHNOLOGYPREFERENCE_ID, WORKING_YEARS, 
+      HIRE_TIME, EMAIL, QQNO, 
+      LINKNO, CREATE_TIME, UPDATE_TIME, 
+      PHOTOGRAPH)
+    values (#{employeeId,jdbcType=VARCHAR}, #{employeeName,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{dutyId,jdbcType=VARCHAR}, #{technologypreferenceId,jdbcType=VARCHAR}, #{workingYears,jdbcType=DECIMAL}, 
+      #{hireTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, #{qqno,jdbcType=VARCHAR}, 
+      #{linkno,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{photograph,jdbcType=BLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeWithBLOBs" >
+    insert into PMS_CM_EMPLOYEE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="employeeId != null" >
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeName != null" >
+        EMPLOYEE_NAME,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="dutyId != null" >
+        DUTY_ID,
+      </if>
+      <if test="technologypreferenceId != null" >
+        TECHNOLOGYPREFERENCE_ID,
+      </if>
+      <if test="workingYears != null" >
+        WORKING_YEARS,
+      </if>
+      <if test="hireTime != null" >
+        HIRE_TIME,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="qqno != null" >
+        QQNO,
+      </if>
+      <if test="linkno != null" >
+        LINKNO,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="photograph != null" >
+        PHOTOGRAPH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeName != null" >
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="dutyId != null" >
+        #{dutyId,jdbcType=VARCHAR},
+      </if>
+      <if test="technologypreferenceId != null" >
+        #{technologypreferenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="workingYears != null" >
+        #{workingYears,jdbcType=DECIMAL},
+      </if>
+      <if test="hireTime != null" >
+        #{hireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qqno != null" >
+        #{qqno,jdbcType=VARCHAR},
+      </if>
+      <if test="linkno != null" >
+        #{linkno,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photograph != null" >
+        #{photograph,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from PMS_CM_EMPLOYEE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PMS_CM_EMPLOYEE
+    <set >
+      <if test="record.employeeId != null" >
+        EMPLOYEE_ID = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeName != null" >
+        EMPLOYEE_NAME = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        GENDER = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.dutyId != null" >
+        DUTY_ID = #{record.dutyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technologypreferenceId != null" >
+        TECHNOLOGYPREFERENCE_ID = #{record.technologypreferenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workingYears != null" >
+        WORKING_YEARS = #{record.workingYears,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hireTime != null" >
+        HIRE_TIME = #{record.hireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqno != null" >
+        QQNO = #{record.qqno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkno != null" >
+        LINKNO = #{record.linkno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.photograph != null" >
+        PHOTOGRAPH = #{record.photograph,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PMS_CM_EMPLOYEE
+    set EMPLOYEE_ID = #{record.employeeId,jdbcType=VARCHAR},
+      EMPLOYEE_NAME = #{record.employeeName,jdbcType=VARCHAR},
+      GENDER = #{record.gender,jdbcType=CHAR},
+      DUTY_ID = #{record.dutyId,jdbcType=VARCHAR},
+      TECHNOLOGYPREFERENCE_ID = #{record.technologypreferenceId,jdbcType=VARCHAR},
+      WORKING_YEARS = #{record.workingYears,jdbcType=DECIMAL},
+      HIRE_TIME = #{record.hireTime,jdbcType=TIMESTAMP},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      QQNO = #{record.qqno,jdbcType=VARCHAR},
+      LINKNO = #{record.linkno,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      PHOTOGRAPH = #{record.photograph,jdbcType=BLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PMS_CM_EMPLOYEE
+    set EMPLOYEE_ID = #{record.employeeId,jdbcType=VARCHAR},
+      EMPLOYEE_NAME = #{record.employeeName,jdbcType=VARCHAR},
+      GENDER = #{record.gender,jdbcType=CHAR},
+      DUTY_ID = #{record.dutyId,jdbcType=VARCHAR},
+      TECHNOLOGYPREFERENCE_ID = #{record.technologypreferenceId,jdbcType=VARCHAR},
+      WORKING_YEARS = #{record.workingYears,jdbcType=DECIMAL},
+      HIRE_TIME = #{record.hireTime,jdbcType=TIMESTAMP},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      QQNO = #{record.qqno,jdbcType=VARCHAR},
+      LINKNO = #{record.linkno,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeWithBLOBs" >
+    update PMS_CM_EMPLOYEE
+    <set >
+      <if test="employeeName != null" >
+        EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="dutyId != null" >
+        DUTY_ID = #{dutyId,jdbcType=VARCHAR},
+      </if>
+      <if test="technologypreferenceId != null" >
+        TECHNOLOGYPREFERENCE_ID = #{technologypreferenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="workingYears != null" >
+        WORKING_YEARS = #{workingYears,jdbcType=DECIMAL},
+      </if>
+      <if test="hireTime != null" >
+        HIRE_TIME = #{hireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qqno != null" >
+        QQNO = #{qqno,jdbcType=VARCHAR},
+      </if>
+      <if test="linkno != null" >
+        LINKNO = #{linkno,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photograph != null" >
+        PHOTOGRAPH = #{photograph,jdbcType=BLOB},
+      </if>
+    </set>
+    where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.seits.modules.business.cm.model.employee.EmployeeWithBLOBs" >
+    update PMS_CM_EMPLOYEE
+    set EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=CHAR},
+      DUTY_ID = #{dutyId,jdbcType=VARCHAR},
+      TECHNOLOGYPREFERENCE_ID = #{technologypreferenceId,jdbcType=VARCHAR},
+      WORKING_YEARS = #{workingYears,jdbcType=DECIMAL},
+      HIRE_TIME = #{hireTime,jdbcType=TIMESTAMP},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      QQNO = #{qqno,jdbcType=VARCHAR},
+      LINKNO = #{linkno,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PHOTOGRAPH = #{photograph,jdbcType=BLOB}
+    where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.seits.modules.business.cm.model.employee.Employee" >
+    update PMS_CM_EMPLOYEE
+    set EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=CHAR},
+      DUTY_ID = #{dutyId,jdbcType=VARCHAR},
+      TECHNOLOGYPREFERENCE_ID = #{technologypreferenceId,jdbcType=VARCHAR},
+      WORKING_YEARS = #{workingYears,jdbcType=DECIMAL},
+      HIRE_TIME = #{hireTime,jdbcType=TIMESTAMP},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      QQNO = #{qqno,jdbcType=VARCHAR},
+      LINKNO = #{linkno,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

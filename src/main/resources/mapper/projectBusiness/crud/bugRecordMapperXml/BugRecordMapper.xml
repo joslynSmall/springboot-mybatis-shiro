@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.seits.modules.business.bp.dao.crud.bugRecordMapper.BugRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.seits.modules.business.bp.model.bugRecord.BugRecord" >
+    <id column="BUG_ID" property="bugId" jdbcType="VARCHAR" />
+    <result column="WORK_ID" property="workId" jdbcType="VARCHAR" />
+    <result column="TASK_CONFIRM_ID" property="taskConfirmId" jdbcType="VARCHAR" />
+    <result column="BUG_LEVEL_ID" property="bugLevelId" jdbcType="VARCHAR" />
+    <result column="BUG_RECORD_TIME" property="bugRecordTime" jdbcType="TIMESTAMP" />
+    <result column="BUG_RECORD_EMPLOYEE_ID" property="bugRecordEmployeeId" jdbcType="VARCHAR" />
+    <result column="BUG_DESC" property="bugDesc" jdbcType="VARCHAR" />
+    <result column="BUG_STATE_ID" property="bugStateId" jdbcType="VARCHAR" />
+    <result column="BUG_DEAL_RESULT" property="bugDealResult" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BUG_ID, WORK_ID, TASK_CONFIRM_ID, BUG_LEVEL_ID, BUG_RECORD_TIME, BUG_RECORD_EMPLOYEE_ID, 
+    BUG_DESC, BUG_STATE_ID, BUG_DEAL_RESULT, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PMS_CM_BUGRECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecordKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_CM_BUGRECORD
+    where BUG_ID = #{bugId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecordKey" >
+    delete from PMS_CM_BUGRECORD
+    where BUG_ID = #{bugId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecordExample" >
+    delete from PMS_CM_BUGRECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecord" >
+    insert into PMS_CM_BUGRECORD (BUG_ID, WORK_ID, TASK_CONFIRM_ID, 
+      BUG_LEVEL_ID, BUG_RECORD_TIME, BUG_RECORD_EMPLOYEE_ID, 
+      BUG_DESC, BUG_STATE_ID, BUG_DEAL_RESULT, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{bugId,jdbcType=VARCHAR}, #{workId,jdbcType=VARCHAR}, #{taskConfirmId,jdbcType=VARCHAR}, 
+      #{bugLevelId,jdbcType=VARCHAR}, #{bugRecordTime,jdbcType=TIMESTAMP}, #{bugRecordEmployeeId,jdbcType=VARCHAR}, 
+      #{bugDesc,jdbcType=VARCHAR}, #{bugStateId,jdbcType=VARCHAR}, #{bugDealResult,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecord" >
+    insert into PMS_CM_BUGRECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bugId != null" >
+        BUG_ID,
+      </if>
+      <if test="workId != null" >
+        WORK_ID,
+      </if>
+      <if test="taskConfirmId != null" >
+        TASK_CONFIRM_ID,
+      </if>
+      <if test="bugLevelId != null" >
+        BUG_LEVEL_ID,
+      </if>
+      <if test="bugRecordTime != null" >
+        BUG_RECORD_TIME,
+      </if>
+      <if test="bugRecordEmployeeId != null" >
+        BUG_RECORD_EMPLOYEE_ID,
+      </if>
+      <if test="bugDesc != null" >
+        BUG_DESC,
+      </if>
+      <if test="bugStateId != null" >
+        BUG_STATE_ID,
+      </if>
+      <if test="bugDealResult != null" >
+        BUG_DEAL_RESULT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bugId != null" >
+        #{bugId,jdbcType=VARCHAR},
+      </if>
+      <if test="workId != null" >
+        #{workId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskConfirmId != null" >
+        #{taskConfirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugLevelId != null" >
+        #{bugLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugRecordTime != null" >
+        #{bugRecordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bugRecordEmployeeId != null" >
+        #{bugRecordEmployeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugDesc != null" >
+        #{bugDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="bugStateId != null" >
+        #{bugStateId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugDealResult != null" >
+        #{bugDealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecordExample" resultType="java.lang.Integer" >
+    select count(*) from PMS_CM_BUGRECORD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PMS_CM_BUGRECORD
+    <set >
+      <if test="record.bugId != null" >
+        BUG_ID = #{record.bugId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workId != null" >
+        WORK_ID = #{record.workId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskConfirmId != null" >
+        TASK_CONFIRM_ID = #{record.taskConfirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bugLevelId != null" >
+        BUG_LEVEL_ID = #{record.bugLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bugRecordTime != null" >
+        BUG_RECORD_TIME = #{record.bugRecordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bugRecordEmployeeId != null" >
+        BUG_RECORD_EMPLOYEE_ID = #{record.bugRecordEmployeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bugDesc != null" >
+        BUG_DESC = #{record.bugDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bugStateId != null" >
+        BUG_STATE_ID = #{record.bugStateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bugDealResult != null" >
+        BUG_DEAL_RESULT = #{record.bugDealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PMS_CM_BUGRECORD
+    set BUG_ID = #{record.bugId,jdbcType=VARCHAR},
+      WORK_ID = #{record.workId,jdbcType=VARCHAR},
+      TASK_CONFIRM_ID = #{record.taskConfirmId,jdbcType=VARCHAR},
+      BUG_LEVEL_ID = #{record.bugLevelId,jdbcType=VARCHAR},
+      BUG_RECORD_TIME = #{record.bugRecordTime,jdbcType=TIMESTAMP},
+      BUG_RECORD_EMPLOYEE_ID = #{record.bugRecordEmployeeId,jdbcType=VARCHAR},
+      BUG_DESC = #{record.bugDesc,jdbcType=VARCHAR},
+      BUG_STATE_ID = #{record.bugStateId,jdbcType=VARCHAR},
+      BUG_DEAL_RESULT = #{record.bugDealResult,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecord" >
+    update PMS_CM_BUGRECORD
+    <set >
+      <if test="workId != null" >
+        WORK_ID = #{workId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskConfirmId != null" >
+        TASK_CONFIRM_ID = #{taskConfirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugLevelId != null" >
+        BUG_LEVEL_ID = #{bugLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugRecordTime != null" >
+        BUG_RECORD_TIME = #{bugRecordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bugRecordEmployeeId != null" >
+        BUG_RECORD_EMPLOYEE_ID = #{bugRecordEmployeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugDesc != null" >
+        BUG_DESC = #{bugDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="bugStateId != null" >
+        BUG_STATE_ID = #{bugStateId,jdbcType=VARCHAR},
+      </if>
+      <if test="bugDealResult != null" >
+        BUG_DEAL_RESULT = #{bugDealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where BUG_ID = #{bugId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.seits.modules.business.bp.model.bugRecord.BugRecord" >
+    update PMS_CM_BUGRECORD
+    set WORK_ID = #{workId,jdbcType=VARCHAR},
+      TASK_CONFIRM_ID = #{taskConfirmId,jdbcType=VARCHAR},
+      BUG_LEVEL_ID = #{bugLevelId,jdbcType=VARCHAR},
+      BUG_RECORD_TIME = #{bugRecordTime,jdbcType=TIMESTAMP},
+      BUG_RECORD_EMPLOYEE_ID = #{bugRecordEmployeeId,jdbcType=VARCHAR},
+      BUG_DESC = #{bugDesc,jdbcType=VARCHAR},
+      BUG_STATE_ID = #{bugStateId,jdbcType=VARCHAR},
+      BUG_DEAL_RESULT = #{bugDealResult,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where BUG_ID = #{bugId,jdbcType=VARCHAR}
+  </update>
+</mapper>

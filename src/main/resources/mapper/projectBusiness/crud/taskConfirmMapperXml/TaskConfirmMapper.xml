@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.seits.modules.business.bp.dao.crud.taskConfirmMapper.TaskConfirmMapper" >
+  <resultMap id="BaseResultMap" type="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirm" >
+    <id column="TASK_CONFIRM_ID" property="taskConfirmId" jdbcType="VARCHAR" />
+    <result column="TASK_CONFIRM_NAME" property="taskConfirmName" jdbcType="VARCHAR" />
+    <result column="WORK_PLAN_ID" property="workPlanId" jdbcType="VARCHAR" />
+    <result column="WORK_ID" property="workId" jdbcType="VARCHAR" />
+    <result column="TASK_SUBMIT_TIME" property="taskSubmitTime" jdbcType="TIMESTAMP" />
+    <result column="CONFIRM_TIME" property="confirmTime" jdbcType="TIMESTAMP" />
+    <result column="TASK_CONFIRM_EMPLOYEE_ID" property="taskConfirmEmployeeId" jdbcType="VARCHAR" />
+    <result column="TASK_CONFIRM_RESULT_ID" property="taskConfirmResultId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TASK_CONFIRM_ID, TASK_CONFIRM_NAME, WORK_PLAN_ID, WORK_ID, TASK_SUBMIT_TIME, CONFIRM_TIME, 
+    TASK_CONFIRM_EMPLOYEE_ID, TASK_CONFIRM_RESULT_ID, REMARK, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirmExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TASK_CONFIRM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirmKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from TASK_CONFIRM
+    where TASK_CONFIRM_ID = #{taskConfirmId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirmKey" >
+    delete from TASK_CONFIRM
+    where TASK_CONFIRM_ID = #{taskConfirmId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirmExample" >
+    delete from TASK_CONFIRM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirm" >
+    insert into TASK_CONFIRM (TASK_CONFIRM_ID, TASK_CONFIRM_NAME, WORK_PLAN_ID, 
+      WORK_ID, TASK_SUBMIT_TIME, CONFIRM_TIME, 
+      TASK_CONFIRM_EMPLOYEE_ID, TASK_CONFIRM_RESULT_ID, 
+      REMARK, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{taskConfirmId,jdbcType=VARCHAR}, #{taskConfirmName,jdbcType=VARCHAR}, #{workPlanId,jdbcType=VARCHAR}, 
+      #{workId,jdbcType=VARCHAR}, #{taskSubmitTime,jdbcType=TIMESTAMP}, #{confirmTime,jdbcType=TIMESTAMP}, 
+      #{taskConfirmEmployeeId,jdbcType=VARCHAR}, #{taskConfirmResultId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirm" >
+    insert into TASK_CONFIRM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="taskConfirmId != null" >
+        TASK_CONFIRM_ID,
+      </if>
+      <if test="taskConfirmName != null" >
+        TASK_CONFIRM_NAME,
+      </if>
+      <if test="workPlanId != null" >
+        WORK_PLAN_ID,
+      </if>
+      <if test="workId != null" >
+        WORK_ID,
+      </if>
+      <if test="taskSubmitTime != null" >
+        TASK_SUBMIT_TIME,
+      </if>
+      <if test="confirmTime != null" >
+        CONFIRM_TIME,
+      </if>
+      <if test="taskConfirmEmployeeId != null" >
+        TASK_CONFIRM_EMPLOYEE_ID,
+      </if>
+      <if test="taskConfirmResultId != null" >
+        TASK_CONFIRM_RESULT_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="taskConfirmId != null" >
+        #{taskConfirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskConfirmName != null" >
+        #{taskConfirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="workPlanId != null" >
+        #{workPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="workId != null" >
+        #{workId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskSubmitTime != null" >
+        #{taskSubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmTime != null" >
+        #{confirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskConfirmEmployeeId != null" >
+        #{taskConfirmEmployeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskConfirmResultId != null" >
+        #{taskConfirmResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirmExample" resultType="java.lang.Integer" >
+    select count(*) from TASK_CONFIRM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TASK_CONFIRM
+    <set >
+      <if test="record.taskConfirmId != null" >
+        TASK_CONFIRM_ID = #{record.taskConfirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskConfirmName != null" >
+        TASK_CONFIRM_NAME = #{record.taskConfirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workPlanId != null" >
+        WORK_PLAN_ID = #{record.workPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workId != null" >
+        WORK_ID = #{record.workId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskSubmitTime != null" >
+        TASK_SUBMIT_TIME = #{record.taskSubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.confirmTime != null" >
+        CONFIRM_TIME = #{record.confirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskConfirmEmployeeId != null" >
+        TASK_CONFIRM_EMPLOYEE_ID = #{record.taskConfirmEmployeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskConfirmResultId != null" >
+        TASK_CONFIRM_RESULT_ID = #{record.taskConfirmResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TASK_CONFIRM
+    set TASK_CONFIRM_ID = #{record.taskConfirmId,jdbcType=VARCHAR},
+      TASK_CONFIRM_NAME = #{record.taskConfirmName,jdbcType=VARCHAR},
+      WORK_PLAN_ID = #{record.workPlanId,jdbcType=VARCHAR},
+      WORK_ID = #{record.workId,jdbcType=VARCHAR},
+      TASK_SUBMIT_TIME = #{record.taskSubmitTime,jdbcType=TIMESTAMP},
+      CONFIRM_TIME = #{record.confirmTime,jdbcType=TIMESTAMP},
+      TASK_CONFIRM_EMPLOYEE_ID = #{record.taskConfirmEmployeeId,jdbcType=VARCHAR},
+      TASK_CONFIRM_RESULT_ID = #{record.taskConfirmResultId,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirm" >
+    update TASK_CONFIRM
+    <set >
+      <if test="taskConfirmName != null" >
+        TASK_CONFIRM_NAME = #{taskConfirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="workPlanId != null" >
+        WORK_PLAN_ID = #{workPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="workId != null" >
+        WORK_ID = #{workId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskSubmitTime != null" >
+        TASK_SUBMIT_TIME = #{taskSubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmTime != null" >
+        CONFIRM_TIME = #{confirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskConfirmEmployeeId != null" >
+        TASK_CONFIRM_EMPLOYEE_ID = #{taskConfirmEmployeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskConfirmResultId != null" >
+        TASK_CONFIRM_RESULT_ID = #{taskConfirmResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TASK_CONFIRM_ID = #{taskConfirmId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.seits.modules.business.bp.model.taskConfirm.TaskConfirm" >
+    update TASK_CONFIRM
+    set TASK_CONFIRM_NAME = #{taskConfirmName,jdbcType=VARCHAR},
+      WORK_PLAN_ID = #{workPlanId,jdbcType=VARCHAR},
+      WORK_ID = #{workId,jdbcType=VARCHAR},
+      TASK_SUBMIT_TIME = #{taskSubmitTime,jdbcType=TIMESTAMP},
+      CONFIRM_TIME = #{confirmTime,jdbcType=TIMESTAMP},
+      TASK_CONFIRM_EMPLOYEE_ID = #{taskConfirmEmployeeId,jdbcType=VARCHAR},
+      TASK_CONFIRM_RESULT_ID = #{taskConfirmResultId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where TASK_CONFIRM_ID = #{taskConfirmId,jdbcType=VARCHAR}
+  </update>
+</mapper>

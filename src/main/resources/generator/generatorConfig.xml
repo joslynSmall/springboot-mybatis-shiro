@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="config.properties"/>
+    <!--<classPathEntry
+            location="${jdbc.classPath}"/>-->
+    <context id="my" targetRuntime="MyBatis3" defaultModelType="hierarchical">
+        <commentGenerator type="cn.seisys.mybatis.generator.api.CommentGenerator">
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="false"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}" userId="${jdbc.user}"
+                        password="${jdbc.password}">
+            <!-- 针对oracle数据库 -->
+            <property name="remarksReporting" value="true"></property>
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="${targetModelPackage}"
+                            targetProject="${targetJavaProject}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="${targetXMLPackage}"
+                         targetProject="${targetResourcesProject}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="${targetMapperPackage}"
+                             targetProject="${targetJavaProject}" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 屏蔽Example 生成-->
+        <table tableName="PMS_CM_WorkPlan" domainObjectName="WorkPlan">
+            <columnOverride column="PLAN_ENACT_TIME" property="planEnactTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <columnOverride column="PLAN_START_TIME" property="planStartTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <columnOverride column="PLAN_COMPLETE_TIME" property="planCompleteTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <columnOverride column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <columnOverride column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </table>
+    </context>
+</generatorConfiguration>
